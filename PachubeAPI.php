@@ -1,7 +1,7 @@
 <?php
 /**
  * Pachube API class
- * Version 0.3 (June 2011)
+ * Version 0.4 (June 2011)
  * Requirements: PHP5, cURL, API v.2.0
  *
  * This program is free software; you can redistribute it and/or modify
@@ -11,18 +11,16 @@
  */
 class PachubeAPI
 {
-	private $Api;
 	private $Pachube;
-	private $Pachube_headers;
+	private $Key;
 	
 	/**
 	 * Constructor
 	 */
-	function __construct($api) 
+	function __construct($key) 
 	{
-		$this->Api = $api;
 		$this->Pachube = "api.pachube.com/v2";
-		$this->Pachube_headers  = array("X-PachubeApiKey: $this->Api");
+		$this->Key  = $key;
 	}
 	
 	/**
@@ -268,7 +266,15 @@ class PachubeAPI
 	 * @return http code response
 	 */
 	private function _getRequest($url)
-	{		
+	{
+		if (strlen(strstr($url,'?'))>0)
+		{
+			$url .= "&key=" . $this->Key;
+		}
+		else
+		{
+			$url .= "?key=" . $this->Key;
+		}
 		if(function_exists('curl_init'))
 		{
 			return $this->_curl($url, true);
@@ -290,7 +296,15 @@ class PachubeAPI
 	 * @return http code response
 	 */
 	private function _postRequest($url, $data)
-	{		
+	{
+		if (strlen(strstr($url,'?'))>0)
+		{
+			$url .= "&key=" . $this->Key;
+		}
+		else
+		{
+			$url .= "?key=" . $this->Key;
+		}
 		if(function_exists('curl_init'))
 		{
 			return $this->_curl($url, true, true, $data);
@@ -313,6 +327,14 @@ class PachubeAPI
 	 */
 	private function _putRequest($url, $data)
 	{	
+		if (strlen(strstr($url,'?'))>0)
+		{
+			$url .= "&key=" . $this->Key;
+		}
+		else
+		{
+			$url .= "?key=" . $this->Key;
+		}
 		if(function_exists('curl_init'))
 		{
 			$putData = tmpfile();
@@ -322,7 +344,7 @@ class PachubeAPI
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
+			//curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
 			curl_setopt($ch, CURLOPT_INFILE, $putData);
 			curl_setopt($ch, CURLOPT_INFILESIZE, strlen($data));
 			curl_setopt($ch, CURLOPT_PUT, true);
@@ -350,10 +372,18 @@ class PachubeAPI
 	 */
 	private function _deleteRequest($url)
 	{
+		if (strlen(strstr($url,'?'))>0)
+		{
+			$url .= "&key=" . $this->Key;
+		}
+		else
+		{
+			$url .= "?key=" . $this->Key;
+		}
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
+		//curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 		curl_exec($ch);
 		$headers = curl_getinfo($ch);
@@ -370,7 +400,7 @@ class PachubeAPI
 	{
 		// Create a stream
 		$opts['http']['method'] = "GET";
-		$opts['http']['header'] = "X-PachubeApiKey: ".$this->Api."\r\n";
+		//$opts['http']['header'] = "X-PachubeApiKey: ".$this->Api."\r\n";
 		$context = stream_context_create($opts);
 		// Open the file using the HTTP headers set above
 		return file_get_contents($url, false, $context);
@@ -388,7 +418,7 @@ class PachubeAPI
 		$opts = array('http' =>  
 		   array(  
 		      'method'  => 'POST',  
-		      'header'  => 'Content-type: application/x-www-form-urlencoded',  
+		      'header'  => 'Content-type: application/x-www-form-urlencoded',
 		      'content' => $postfields,  
 		   )  
 		);  
@@ -407,7 +437,7 @@ class PachubeAPI
 	{	
 		// Create a stream
 		$opts['http']['method'] = "PUT";
-		$opts['http']['header'] = "X-PachubeApiKey: ".$this->Api."\r\n";
+		//$opts['http']['header'] = "X-PachubeApiKey: ".$this->Api."\r\n";
 		$opts['http']['header'] .= "Content-Length: " . strlen($data) . "\r\n";
 		$opts['http']['content'] = $data;
 		$context = stream_context_create($opts);
@@ -428,7 +458,7 @@ class PachubeAPI
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			if($auth) curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
+			//if($auth) curl_setopt($ch, CURLOPT_HTTPHEADER, $this->Pachube_headers);
 			if($post)
 			{
 				curl_setopt($ch, CURLOPT_POST, 1);
