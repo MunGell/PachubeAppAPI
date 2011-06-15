@@ -1,5 +1,4 @@
 <?php
-
 include('PachubeAPI.php');
 
 $feed = 26601;
