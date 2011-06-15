@@ -6,14 +6,12 @@ $datastream = 0;
 $user = "MunGell";
 
 echo "<h1>Pachube User Application API</h1>";
-
 $pachubeUser = new PachubeUserAPI("-mrsjkwQ8vasVGpCucUl9J8tnRgK4u0f0XWYE1zAVx8", $user);
 
 echo "<h2>getUser(): </h2><br/>";
 echo "<code>" . $pachubeUser->getUser("xml") . "</code><br/>";
 
 echo "<h1>Pachube Feed Application API</h1>";
-
 $pachubeFeed = new PachubeFeedAPI("Hvckn04wjZd0HPLXipdtZgqiFrGEngL9Mcb1rSOiyO4", $feed);
 
 echo "<h2>getFeed(): </h2><br/>";
@@ -51,7 +49,6 @@ echo "<h2>getDatastreamHistory(): </h2><br/>";
 echo "<code>" . $pachubeFeed->getDatastreamHistory("json", 0, false, false, false, 2) . "</code><br/>";
 
 echo "<h1>Pachube Datastream Application API</h1>";
-
 $pachubeDatastream = new PachubeDatastreamAPI("djSZB5oH0EyTJuSoYmTAtd0rkKlXx7Jh_vMPuYPGzbc", $feed, $datastream);
 
 echo "<h2>getDatastream(): </h2><br/>";
