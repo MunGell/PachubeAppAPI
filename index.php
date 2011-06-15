@@ -2,20 +2,20 @@
 
 include('PachubeAPI.php');
 
-$feed = 26594;
+$feed = 26601;
 $datastream = 0;
 $user = "MunGell";
 
 echo "<h1>Pachube User Application API</h1>";
 
-$pachubeUser = new PachubeUserAPI("hOh7qAM5PHSOqrTapHAPvxv0QBI0zlmQtbxREh5yl18", $user);
+$pachubeUser = new PachubeUserAPI("-mrsjkwQ8vasVGpCucUl9J8tnRgK4u0f0XWYE1zAVx8", $user);
 
 echo "<h2>getUser(): </h2><br/>";
 echo "<code>" . $pachubeUser->getUser("xml") . "</code><br/>";
 
 echo "<h1>Pachube Feed Application API</h1>";
 
-$pachubeFeed = new PachubeFeedAPI("y6kiW37IPEbrYSxh4t2D1pZkZFLc0E9j8kmXF4kjtHQ", $feed);
+$pachubeFeed = new PachubeFeedAPI("Hvckn04wjZd0HPLXipdtZgqiFrGEngL9Mcb1rSOiyO4", $feed);
 
 echo "<h2>getFeed(): </h2><br/>";
 echo "<code>" . $pachubeFeed->getFeed("csv") . "</code><br/>";
@@ -53,7 +53,7 @@ echo "<code>" . $pachubeFeed->getDatastreamHistory("json", 0, false, false, fals
 
 echo "<h1>Pachube Datastream Application API</h1>";
 
-$pachubeDatastream = new PachubeDatastreamAPI("UVukhlx_We5bOnjLBPAPtOI_Ccu3sseAxUO3v8LgG50", $feed, $datastream);
+$pachubeDatastream = new PachubeDatastreamAPI("djSZB5oH0EyTJuSoYmTAtd0rkKlXx7Jh_vMPuYPGzbc", $feed, $datastream);
 
 echo "<h2>getDatastream(): </h2><br/>";
 echo "<code>" . $pachubeDatastream->getDatastream("json") . "</code><br/>";
