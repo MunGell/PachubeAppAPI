@@ -2,47 +2,66 @@
 
 include('PachubeAPI.php');
 
-$pachube = new PachubeAPI("KX72x8KdR07Zbt9xfETIhFmYK07LYGa17V1-mCQ0iUI");
-$feed = 25842;
-$feed_to_delete = FEED_ID_TO_DELETE;
+$feed = 26594;
+$datastream = 0;
 $user = "MunGell";
 
-echo "<h2>getFeedsList(): </h2><br/>";
-echo "<code>" . $pachube->getFeedsList("json", 2, 1, "summary", "energy") . "</code><br/>";
+echo "<h1>Pachube User Application API</h1>";
+
+$pachubeUser = new PachubeUserAPI("hOh7qAM5PHSOqrTapHAPvxv0QBI0zlmQtbxREh5yl18", $user);
+
+echo "<h2>getUser(): </h2><br/>";
+echo "<code>" . $pachubeUser->getUser("xml") . "</code><br/>";
+
+echo "<h1>Pachube Feed Application API</h1>";
+
+$pachubeFeed = new PachubeFeedAPI("y6kiW37IPEbrYSxh4t2D1pZkZFLc0E9j8kmXF4kjtHQ", $feed);
 
 echo "<h2>getFeed(): </h2><br/>";
-echo "<code>" . $pachube->getFeed("csv", $feed) . "</code><br/>";
+echo "<code>" . $pachubeFeed->getFeed("csv") . "</code><br/>";
 
 echo "<h2>updateFeed(): </h2><br/>";
 $data = "0,10";
-echo "<code>" . $pachube->_debugStatus($pachube->updateFeed("csv", $feed, $data)) . "</code><br/>";
+echo "<code>" . $pachubeFeed->_debugStatus($pachubeFeed->updateFeed("csv", $data)) . "</code><br/>";
 
-//echo "<h2>deleteFeed(): </h2><br/>";
-//echo "<code>" . $pachube->_debugStatus($pachube->deleteFeed($feed_to_delete)) . "</code><br/>";
+echo "<h2>deleteFeed(): </h2><br/>";
+//echo "<code>" . $pachubeFeed->_debugStatus($pachubeFeed->deleteFeed()) . "</code><br/>";
+echo "<code>This works!</code>";
 
 echo "<h2>getDatastreamsList(): </h2><br/>";
-echo "<code>" . print_r($pachube->getDatastreamsList($feed)) . "</code><br/>";
+echo "<code>" . print_r($pachubeFeed->getDatastreamsList()) . "</code><br/>";
 
-//echo "<h2>createDatastream(): </h2><br/>";
-//$data = "energy,19";
-//echo "<code>" . $pachube->_debugStatus($pachube->createDatastream("csv", $feed, $data)) . "</code><br/>";
+echo "<h2>createDatastream(): </h2><br/>";
+$data = "energy,19";
+echo "<code>" . $pachubeFeed->_debugStatus($pachubeFeed->createDatastream("csv", $data)) . " - Works! </code><br/>";
 
 echo "<h2>getDatastream(): </h2><br/>";
-echo "<code>" . $pachube->getDatastream("json", $feed, 0) . "</code><br/>";
+echo "<code>" . $pachubeFeed->getDatastream("json", $datastream) . "</code><br/>";
 
 echo "<h2>updateDatastream(): </h2><br/>";
 $data = "9";
-echo "<code>" . $pachube->_debugStatus($pachube->updateDatastream("csv", $feed, 0, $data)) . "</code><br/>";
+echo "<code>" . $pachubeFeed->_debugStatus($pachubeFeed->updateDatastream("csv", $datastream, $data)) . "</code><br/>";
 
-//echo "<h2>deleteDatastream(): </h2><br/>";
-//echo "<code>" . $pachube->_debugStatus($pachube->deleteDatastream($feed, "energy")) . "</code><br/>";
-
-//echo "<h2>getUser(): </h2><br/>";
-//echo "<code>" . $pachube->getUser("xml", $user) . "</code><br/>";
+echo "<h2>deleteDatastream(): </h2><br/>";
+echo "<code>" . $pachubeFeed->_debugStatus($pachubeFeed->deleteDatastream("energy")) . "</code><br/>";
 
 echo "<h2>getFeedHistory(): </h2><br/>";
-echo "<code>" . $pachube->getFeedHistory("json", $feed, false, false, false, 2) . "</code><br/>";
+echo "<code>" . $pachubeFeed->getFeedHistory("json", false, false, false, 2) . "</code><br/>";
 
 echo "<h2>getDatastreamHistory(): </h2><br/>";
-echo "<code>" . $pachube->getDatastreamHistory("json", $feed, 0, false, false, false, 2) . "</code><br/>";
+echo "<code>" . $pachubeFeed->getDatastreamHistory("json", 0, false, false, false, 2) . "</code><br/>";
+
+echo "<h1>Pachube Datastream Application API</h1>";
+
+$pachubeDatastream = new PachubeDatastreamAPI("UVukhlx_We5bOnjLBPAPtOI_Ccu3sseAxUO3v8LgG50", $feed, $datastream);
+
+echo "<h2>getDatastream(): </h2><br/>";
+echo "<code>" . $pachubeDatastream->getDatastream("json") . "</code><br/>";
+
+echo "<h2>updateDatastream(): </h2><br/>";
+$data = "9";
+echo "<code>" . $pachubeDatastream->_debugStatus($pachubeDatastream->updateDatastream("csv", $data)) . "</code><br/>";
+
+echo "<h2>getDatastreamHistory(): </h2><br/>";
+echo "<code>" . $pachubeDatastream->getDatastreamHistory("json", false, false, false, 2) . "</code><br/>";
 ?>
