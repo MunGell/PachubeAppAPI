@@ -34,7 +34,8 @@ class PachubeFeedAPI
 	public function getFeed($format=false,$datastreams=false)
 	{
 		$url = "http://$this->Pachube/feeds/$this->Feed";
-		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format . "?";
+		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
+		$url .= "?";
 		if($datastreams)
 		{
 			if(is_array($datastreams))
@@ -72,6 +73,39 @@ class PachubeFeedAPI
 	}
 	
 	/**
+	 * Get feed history
+	 * @param string format of output ("json", "xml", "csv")
+	 * @param int feed ID
+	 * @param string start point
+	 * @param string end point
+	 * @param string duration
+	 * @param int page
+	 * @param int per_page
+	 * @param string time
+	 * @param bool find_previous
+	 * @param string interval_type ("discrete", false)
+	 * @param int interval (in seconds: 0, 30, 60, 300, 900, 3600, 10800, 21600, 43200, 86400)
+	 * @return string
+	 */
+	public function getFeedHistory($format, $start=false, $end=false, $duration=false, $page=false, $per_page=false, $time=false, $find_previous=false, $interval_type=false, $interval=false)
+	{
+		$url = "http://$this->Pachube/feeds/$this->Feed";
+		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
+		$url .= "?";
+		if($start) $url .= "start=" . $start . "&";
+		if($end) $url .= "content=" . $content . "&";
+		if($duration) $url .= "duration=" . $duration . "&";
+		if($page) $url .= "page=" . $page . "&";
+		if($per_page) $url .= "end=" . $end . "&";
+		if($time) $url .= "time=" . $time . "&";
+		if($find_previous) $url .= "find_previous=" . $find_previous . "&";
+		if($interval_type) $url .= "interval_type=" . $interval_type . "&";
+		if($interval) $url .= "interval=" . $interval;
+
+		return $this->_getRequest($url);
+	}
+	
+	/**
 	 * Get feed information
 	 * @return array of objects
 	 */
@@ -95,23 +129,10 @@ class PachubeFeedAPI
 	}
 	
 	/**
-	 * Get datastream
-	 * @param string format of output ("json", "xml", "csv")
-	 * @param string datastream ID
-	 * @return string
-	 */
-	public function getDatastream($format=false, $datastream)
-	{
-		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$datastream";
-		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
-		return $this->_getRequest($url);
-	}
-	
-	/**
 	 * Update datastream
 	 * @param string format of output ("json", "xml", "csv")
 	 * @param string datastream ID
-     * @param string data
+	 * @param string data
 	 * @return http response headers
 	 */
 	public function updateDatastream($format=false, $datastream, $data)
@@ -120,7 +141,7 @@ class PachubeFeedAPI
 		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$datastream";
 		return $this->_putRequest($url, $data);
 	}
-	
+
 	/**
 	 * Delete datastream
 	 * @param string datastream ID
@@ -131,39 +152,7 @@ class PachubeFeedAPI
 		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$datastream";
 		return $this->_deleteRequest($url);
 	}
-	
-	/**
-	 * Get feed history
-	 * @param string format of output ("json", "xml", "csv")
-	 * @param int feed ID
-	 * @param string start point
-	 * @param string end point
-	 * @param string duration
-	 * @param int page
-	 * @param int per_page
-	 * @param string time
-	 * @param bool find_previous
-	 * @param string interval_type ("discrete", false)
-	 * @param int interval (in seconds: 0, 30, 60, 300, 900, 3600, 10800, 21600, 43200, 86400)
-	 * @return string
-	 */
-	public function getFeedHistory($format, $start=false, $end=false, $duration=false, $page=false, $per_page=false, $time=false, $find_previous=false, $interval_type=false, $interval=false)
-	{
-		$url = "http://$this->Pachube/feeds/$this->Feed?";
-		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
-		if($start) $url .= "start=" . $start . "&";
-		if($end) $url .= "content=" . $content . "&";
-		if($duration) $url .= "duration=" . $duration . "&";
-		if($page) $url .= "page=" . $page . "&";
-		if($per_page) $url .= "end=" . $end . "&";
-		if($time) $url .= "time=" . $time . "&";
-		if($find_previous) $url .= "find_previous=" . $find_previous . "&";
-		if($interval_type) $url .= "interval_type=" . $interval_type . "&";
-		if($interval) $url .= "interval=" . $interval;
-		
-		return $this->_getRequest($url);
-	}
-	
+
 	/**
 	 * Get datastream history
 	 * @param string format of output ("json", "xml", "csv")
@@ -193,7 +182,7 @@ class PachubeFeedAPI
 		if($find_previous) $url .= "find_previous=" . $find_previous . "&";
 		if($interval_type) $url .= "interval_type=" . $interval_type . "&";
 		if($interval) $url .= "interval=" . $interval;
-		
+
 		return $this->_getRequest($url);
 	}
 	

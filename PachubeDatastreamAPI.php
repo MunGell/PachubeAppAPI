@@ -68,8 +68,9 @@ class PachubeDatastreamAPI
 	 */
 	public function getDatastreamHistory($format, $start=false, $end=false, $duration=false, $page=false, $per_page=false, $time=false, $find_previous=false, $interval_type=false, $interval=false)
 	{
-		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$this->Datastream?";
+		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$this->Datastream";
 		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
+		$url .= "?";
 		if($start) $url .= "start=" . $start . "&";
 		if($end) $url .= "content=" . $content . "&";
 		if($duration) $url .= "duration=" . $duration . "&";
