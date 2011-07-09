@@ -33,8 +33,8 @@ class PachubeFeedAPI
 	 */
 	public function getFeed($format=false,$datastreams=false)
 	{
-		$url = "http://$this->Pachube/feeds/$this->Feed?";
-		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
+		$url = "http://$this->Pachube/feeds/$this->Feed";
+		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format . "?";
 		if($datastreams)
 		{
 			if(is_array($datastreams))
