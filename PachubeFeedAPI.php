@@ -93,10 +93,10 @@ class PachubeFeedAPI
 		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $url .= ".". $format;
 		$url .= "?";
 		if($start) $url .= "start=" . $start . "&";
-		if($end) $url .= "content=" . $content . "&";
+		if($end) $url .= "end=" . $end . "&";
 		if($duration) $url .= "duration=" . $duration . "&";
 		if($page) $url .= "page=" . $page . "&";
-		if($per_page) $url .= "end=" . $end . "&";
+		if($per_page) $url .= "per_page=" . $per_page . "&";
 		if($time) $url .= "time=" . $time . "&";
 		if($find_previous) $url .= "find_previous=" . $find_previous . "&";
 		if($interval_type) $url .= "interval_type=" . $interval_type . "&";
@@ -174,10 +174,10 @@ class PachubeFeedAPI
 		if($format && ($format == "json" || $format == "csv" || $format == "xml")) $datastream .= ".". $format;
 		$url = "http://$this->Pachube/feeds/$this->Feed/datastreams/$datastream?";
 		if($start) $url .= "start=" . $start . "&";
-		if($end) $url .= "content=" . $content . "&";
+		if($end) $url .= "end=" . $end . "&";
 		if($duration) $url .= "duration=" . $duration . "&";
 		if($page) $url .= "page=" . $page . "&";
-		if($per_page) $url .= "end=" . $end . "&";
+		if($per_page) $url .= "per_page=" . $per_page . "&";
 		if($time) $url .= "time=" . $time . "&";
 		if($find_previous) $url .= "find_previous=" . $find_previous . "&";
 		if($interval_type) $url .= "interval_type=" . $interval_type . "&";
